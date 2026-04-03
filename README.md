@@ -944,7 +944,9 @@ cd openssl-cheatsheet
 | [`generate-ca.sh`](scripts/generate-ca.sh) | Set up a local Certificate Authority |
 | [`sign-with-ca.sh`](scripts/sign-with-ca.sh) | Sign a certificate using your local CA |
 | [`generate-mtls.sh`](scripts/generate-mtls.sh) | Generate a full mTLS set (CA + server + client certs) |
+| [`test-mtls.sh`](scripts/test-mtls.sh) | Test an mTLS connection with curl (PEM + PKCS#12) |
 | [`check-cert.sh`](scripts/check-cert.sh) | Check a remote server's SSL certificate |
+| [`curl-ssl-examples.sh`](scripts/curl-ssl-examples.sh) | curl SSL/TLS reference (client certs, pinning, debugging, TLS versions) |
 
 ### Examples
 
