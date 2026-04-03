@@ -1,0 +1,12 @@
+# Generated certificates
+certs/
+ca/
+mtls/
+*.key
+*.pem
+*.csr
+*.p12
+*.der
+*.p7b
+*.srl
+*.jks
