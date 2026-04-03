@@ -159,7 +159,7 @@ IP.2 = 192.168.1.100
 openssl req -new -key server.key -out server.csr -config csr.cnf
 ```
 
-> **Easier way:** Paste your CSR at [getaCert.com/signcsr](https://getacert.com/signcsr) to get it signed instantly, or generate a complete certificate set at [getaCert.com/selfsign](https://getacert.com/selfsign) — key, CSR, cert, and PKCS#12 in one click.
+> **Web alternative:** [getaCert.com/signcsr](https://getacert.com/signcsr) — sign a CSR online | [getaCert.com/selfsign](https://getacert.com/selfsign) — generate a complete certificate set
 
 ---
 
@@ -218,7 +218,7 @@ openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -nodes \
   -addext "subjectAltName=DNS:www.example.com"
 ```
 
-> **Easier way:** [getaCert.com/selfsign](https://getacert.com/selfsign) generates the key, CSR, certificate, and PKCS#12 bundle in one click. Supports RSA 2048/4096, ECDSA P-256/P-384, and Ed25519.
+> **Web alternative:** [getaCert.com/selfsign](https://getacert.com/selfsign) — generates key, CSR, certificate, and PKCS#12 bundle. Supports RSA, ECDSA, and Ed25519.
 
 ---
 
@@ -253,7 +253,7 @@ openssl req -x509 -newkey rsa:2048 -nodes \
   -addext "subjectAltName=DNS:example.com,DNS:*.example.com,DNS:other-domain.com,DNS:*.other-domain.com"
 ```
 
-> **Easier way:** [getaCert.com/selfsign](https://getacert.com/selfsign) supports up to 3 SAN domains + 1 IP address per certificate, with wildcard support.
+> **Web alternative:** [getaCert.com/selfsign](https://getacert.com/selfsign) supports SAN domains and wildcards.
 
 ---
 
@@ -318,7 +318,7 @@ openssl x509 -in server.pem -outform DER -out server.der
 openssl x509 -in server.pem -pubkey -noout
 ```
 
-> **Easier way:** Paste any PEM certificate at [getaCert.com/viewcert](https://getacert.com/viewcert) to see all fields in a clean, readable format.
+> **Web alternative:** [getaCert.com/viewcert](https://getacert.com/viewcert) — paste a PEM certificate to view all fields.
 
 ---
 
@@ -348,7 +348,7 @@ openssl req -in server.csr -subject -noout
 openssl req -in server.csr -pubkey -noout
 ```
 
-> **Easier way:** Paste any CSR at [getaCert.com/decodecsr](https://getacert.com/decodecsr) to view all parsed fields including SANs, key type, and signature algorithm.
+> **Web alternative:** [getaCert.com/decodecsr](https://getacert.com/decodecsr) — paste a CSR to view parsed fields.
 
 ---
 
@@ -429,7 +429,7 @@ echo | openssl s_client -connect example.com:443 -servername example.com 2>/dev/
   xargs -I{} bash -c 'echo $(( ($(date -d "{}" +%s) - $(date +%s)) / 86400 )) days'
 ```
 
-> **Easier way:** [getaCert.com/check](https://getacert.com/check) checks any domain's certificate, chain, TLS version, cipher suites, and HSTS status — all from your browser with a clean visual output.
+> **Web alternative:** [getaCert.com/check](https://getacert.com/check) — check any domain's certificate, chain, and TLS configuration.
 
 ---
 
@@ -495,7 +495,7 @@ keytool -importkeystore \
   -destkeystore keystore.jks -deststoretype JKS -deststorepass changeit
 ```
 
-> **Easier way:** [getaCert.com/convert](https://getacert.com/convert) converts between PEM, DER, and PKCS#7 formats — upload your file and download the result.
+> **Web alternative:** [getaCert.com/convert](https://getacert.com/convert) — convert between PEM, DER, and PKCS#7.
 
 ---
 
@@ -587,7 +587,7 @@ openssl x509 -in server.pem -noout -modulus | openssl md5
 openssl req -in server.csr -noout -modulus | openssl md5
 ```
 
-> **Easier way:** [getaCert.com/chaincheck](https://getacert.com/chaincheck) validates your full certificate chain, detects ordering issues, and identifies missing intermediates.
+> **Web alternative:** [getaCert.com/chaincheck](https://getacert.com/chaincheck) — validate certificate chains and detect ordering issues.
 
 ---
 
@@ -647,7 +647,7 @@ openssl x509 -req -in intermediate.csr -CA ca.pem -CAkey ca.key \
 cat intermediate.pem ca.pem > chain.pem
 ```
 
-> **Managing a CA with OpenSSL is painful.** Serial numbers, index files, config files, revocation lists — it's a lot of overhead for signing a few certs. [getaCert.com](https://getacert.com) handles all of this for you, including a [REST API](https://getacert.com/about) for programmatic cert generation with a single HTTP request.
+> If you'd rather not manage CA infrastructure, [getaCert.com/casign](https://getacert.com/casign) handles CA signing online, and the [REST API](https://getacert.com/about) supports programmatic cert generation.
 
 ---
 
@@ -705,7 +705,7 @@ curl --cert client.pem --key client.key --cacert ca.pem https://api.example.com
 curl --cert-type P12 --cert client.p12:clientpass --cacert ca.pem https://api.example.com
 ```
 
-> **Easier way:** [getaCert.com/mtls](https://getacert.com/mtls) provides a live mTLS test endpoint with paired certificate generation — generate a client cert and test mutual TLS in seconds.
+> **Web alternative:** [getaCert.com/mtls](https://getacert.com/mtls) — live mTLS test endpoint with paired certificate generation.
 
 ---
 
@@ -895,7 +895,7 @@ Things that trip everyone up:
 
 10. **PEM files can contain multiple certs** — A PEM file can hold the cert chain, private key, and CA certs all in one file. Order matters for chain files.
 
-> **More gotchas:** [getaCert.com/gotchas](https://getacert.com/gotchas) has detailed articles on common SSL/TLS pitfalls with solutions.
+> See also: [getaCert.com/gotchas](https://getacert.com/gotchas) — detailed articles on common SSL/TLS pitfalls.
 
 ---
 
@@ -967,8 +967,6 @@ cd openssl
 ```
 
 All scripts support RSA 2048/4096, ECDSA P-256/P-384, and Ed25519. Output goes to `./certs/<domain>/`.
-
-> **Or skip all of this** and use [getaCert.com](https://getacert.com) — same result, zero setup.
 
 ---
 
