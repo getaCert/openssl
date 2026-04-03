@@ -16,6 +16,7 @@ set -euo pipefail
 ORG="${1:?Usage: $0 <organization-name> [days]}"
 DAYS="${2:-3650}"
 CADIR="./ca"
+CA_PASS="${CA_PASS:-}"
 
 mkdir -p "$CADIR"
 
@@ -26,12 +27,22 @@ if [ -f "$CADIR/ca.key" ]; then
 fi
 
 # Generate CA private key
-openssl genrsa -aes256 -out "$CADIR/ca.key" 4096 2>/dev/null
+if [ -n "$CA_PASS" ]; then
+    openssl genrsa -aes256 -passout "pass:${CA_PASS}" -out "$CADIR/ca.key" 4096 2>/dev/null
+else
+    openssl genrsa -aes256 -out "$CADIR/ca.key" 4096 2>/dev/null
+fi
 echo ""
 
 # Generate CA certificate
+PASSIN_FLAG=()
+if [ -n "$CA_PASS" ]; then
+    PASSIN_FLAG=(-passin "pass:${CA_PASS}")
+fi
+
 openssl req -x509 -new -nodes \
     -key "$CADIR/ca.key" \
+    "${PASSIN_FLAG[@]}" \
     -sha256 -days "$DAYS" \
     -out "$CADIR/ca.pem" \
     -subj "/C=US/ST=Washington/O=${ORG}/CN=${ORG} Root CA" \

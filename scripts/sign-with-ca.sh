@@ -17,6 +17,7 @@ DAYS="${2:-365}"
 KEYTYPE="${3:-rsa2048}"
 CADIR="./ca"
 OUTDIR="./certs/${DOMAIN}"
+CA_PASS="${CA_PASS:-}"
 
 # Check CA exists
 if [ ! -f "$CADIR/ca.key" ] || [ ! -f "$CADIR/ca.pem" ]; then
@@ -58,10 +59,16 @@ openssl req -new \
     -addext "subjectAltName=DNS:${DOMAIN},DNS:www.${DOMAIN},DNS:localhost,IP:127.0.0.1"
 
 # Sign with CA
+PASSIN_FLAG=()
+if [ -n "$CA_PASS" ]; then
+    PASSIN_FLAG=(-passin "pass:${CA_PASS}")
+fi
+
 openssl x509 -req \
     -in "$OUTDIR/server.csr" \
     -CA "$CADIR/ca.pem" \
     -CAkey "$CADIR/ca.key" \
+    "${PASSIN_FLAG[@]}" \
     -CAserial "$CADIR/ca.srl" \
     -out "$OUTDIR/server.pem" \
     -days "$DAYS" \
